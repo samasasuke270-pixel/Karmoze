@@ -492,11 +492,19 @@
       </div>
 
       <div class="field-group">
+        <label class="field-label">○ العمر</label>
+        <input class="field-input" id="f_age" type="number" placeholder="أدخل عمرك" min="1" max="99" />
+      </div>
+
+      <div class="field-group">
         <label class="field-label">○ الألعاب التي تلعبها</label>
         <input class="field-input" id="f_games" type="text" placeholder="مثال: فري فاير، ببجي، فورت نايت..." />
       </div>
 
       <button class="submit-btn" id="submitBtn" onclick="submitForm()" disabled>✅ إرسال الطلب والانضمام</button>
+      <a id="joinGroupBtn" href="https://t.me/+5mcHJN93h3A4ZDAy" target="_blank" style="display:none; margin-top:12px; width:100%; padding:14px; background:rgba(36,161,222,0.2); border:1px solid rgba(36,161,222,0.5); border-radius:12px; color:#fff; font-family:'Tajawal',sans-serif; font-size:1rem; font-weight:700; text-align:center; text-decoration:none; box-sizing:border-box; display:none;">
+        📢 انضم للقناة الآن
+      </a>
     </div>
   </div>
 
@@ -519,14 +527,15 @@
       var interact = document.getElementById('f_interact').value.trim();
       var teams    = document.getElementById('f_teams').value.trim();
       var games    = document.getElementById('f_games').value.trim();
+      var age      = document.getElementById('f_age').value.trim();
       var btn = document.getElementById('submitBtn');
-      var allFilled = name && level && interact && teams && games;
+      var allFilled = name && level && interact && teams && games && age;
       btn.disabled = !allFilled;
       btn.style.opacity = allFilled ? '1' : '0.35';
       btn.style.cursor = allFilled ? 'pointer' : 'not-allowed';
     }
     document.addEventListener('DOMContentLoaded', function() {
-      ['f_name','f_level','f_interact','f_teams','f_games'].forEach(function(id) {
+      ['f_name','f_level','f_interact','f_teams','f_games','f_age'].forEach(function(id) {
         document.getElementById(id).addEventListener('input', checkFields);
       });
     });
@@ -536,9 +545,20 @@
       var interact = document.getElementById('f_interact').value.trim();
       var teams    = document.getElementById('f_teams').value.trim();
       var games    = document.getElementById('f_games').value.trim();
-      if (!name || !level || !interact || !teams || !games) return;
+      var age      = document.getElementById('f_age').value.trim();
+      if (!name || !level || !interact || !teams || !games || !age) return;
       closeForm();
-      window.open('https://t.me/+5mcHJN93h3A4ZDAy', '_blank');
+      var msg = '📋 معلومات الانضمام للطاقم\n\n'
+        + '○ الاسم الكريم: ' + name + '\n'
+        + '○ العمر: ' + age + '\n'
+        + '○ مستوى اللعب: ' + level + '\n'
+        + '○ التفاعل بالطاقم: ' + interact + '\n'
+        + '○ الطواقم السابقة: ' + teams + '\n'
+        + '○ الألعاب: ' + games;
+      var encoded = encodeURIComponent(msg);
+      window.open('https://t.me/ha_s_hira?text=' + encoded, '_blank');
+      // Show join group button
+      document.getElementById('joinGroupBtn').style.display = 'block';
     }
   </script>
 </body>
